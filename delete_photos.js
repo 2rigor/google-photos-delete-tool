@@ -3,6 +3,9 @@
 // const maxImageCount = 5896
 const maxImageCount = "ALL_PHOTOS";
 
+const EXIT_COUNT_MAX = 2;
+let exitCount = 0
+
 // Selector for Images and buttons
 const ELEMENT_SELECTORS = {
     checkboxClass: '.ckGgle',
@@ -36,10 +39,13 @@ let deleteTask = setInterval(() => {
 
 
     if (checkboxes.length <= 0) {
-        console.log("[INFO] No more images to delete.");
-        clearInterval(deleteTask);
-        console.log("[SUCCESS] Tool exited.");
-        return;
+        exitCount++;
+        console.log(`[INFO] No more images to delete (skip ${exitCount})`);
+        if (exitCount >= EXIT_COUNT_MAX) {
+            clearInterval(deleteTask);
+            console.log("[SUCCESS] Tool exited.");
+            return;
+        }
     }
 
     imageCount += checkboxes.length;
